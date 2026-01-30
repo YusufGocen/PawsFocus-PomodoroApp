@@ -1,8 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import SplashScreen from '../screens/SplashScreen'
 import FocusScreen from '../screens/FocusScreen'
+import BreakScreen from '../screens/BreakScreen'
 import React from 'react'
 import Onboarding from '../screens/OnboardingScreen'
+
 
 const Stack=createNativeStackNavigator()
 
@@ -12,6 +14,7 @@ export default function AppNavigator() {
         <Stack.Screen name='Splash' component={SplashScreen}/>
         <Stack.Screen name='Focus' component={FocusScreen}/>
         <Stack.Screen name='Onboarding' component={Onboarding}/>
+        <Stack.Screen name='Break' component={BreakScreen}/>
     </Stack.Navigator>
   )
 }

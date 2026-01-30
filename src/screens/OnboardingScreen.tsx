@@ -22,7 +22,7 @@ const slides = [
   {
     title: 'Mindful Breaks',
     description:'Recharge your energy with scheduled rest intervals. A quiet moment for your soul.',
-    image:require('../assets/images/deneme.png'),
+    image:require('../assets/images/MindfulBreaks.png'),
     button:'Get Started'
   }
 ]
