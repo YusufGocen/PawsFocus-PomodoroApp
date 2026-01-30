@@ -9,14 +9,14 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const slides = [
   {
     title: 'Paws & Focus',
-    description:'find your rhythm, stay cozy.',
+    description:'find your rhythm, stay cozy guided Pomodoro sessions.',
     image:require('../assets/images/deneme.png'),
     button:'Begin Journey'
   },
   {
     title: 'Deep Focus',
     description:'Dedicate time to your goals with guided Pomodoro sessions.',
-    image:require('../assets/images/deneme.png'),
+    image:require('../assets/images/DeepFocus.png'),
     button:'Continue'
   },
   {
@@ -32,12 +32,16 @@ const OnboardingScreen = () => {
   const navigation=useNavigation<any>()
   const [step, setStep] = useState(0)
 
+  const finishOnboarding = async () => {
+    await AsyncStorage.setItem('has_seen_onboarding', 'true')
+    navigation.replace('Focus')
+  }
+
   const HandleContinue = async () => {
-    if(step < slides.length - 1){
+    if (step < slides.length - 1) {
       setStep(prev => prev + 1)
-    }else{
-      await AsyncStorage.setItem('has_seen_onboarding','true')
-      navigation.replace('Focus')
+    } else {
+      await finishOnboarding()
     }
   }
 
@@ -46,7 +50,9 @@ const OnboardingScreen = () => {
   return (
 <SafeAreaView style={styles.safe}>
   <View style={styles.container}>
-
+    <TouchableOpacity onPress={finishOnboarding} activeOpacity={0.6} style={styles.SkipButton}>
+      <Text style={styles.SkipText}>Skip</Text>
+    </TouchableOpacity>
     <View style={styles.card}>
       <View style={styles.imageWrapper}>
         <Image source={current.image} style={styles.image} />
@@ -158,5 +164,15 @@ const styles = StyleSheet.create({
   },
   card: {
     alignItems: 'center',
+  },
+  SkipButton:{
+    position:'absolute',
+    top:20,
+    right:32,
+  },
+  SkipText:{
+    fontSize:16,
+    color:'#9A8F88',
+    fontWeight:'500'
   }
 })
