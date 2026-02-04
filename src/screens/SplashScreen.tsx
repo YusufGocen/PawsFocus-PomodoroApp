@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet } from 'react-native'
+import { View, Text,StyleSheet  , Image} from 'react-native'
 import React from 'react'
 import { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
@@ -32,7 +32,7 @@ export default function SplashScreen() {
           }else{
             navigation.replace('Onboarding')
           }
-        }, 3000);
+        }, 30000);
        } catch (error) {
         navigation.replace('Onboarding')
        }
@@ -43,7 +43,7 @@ export default function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Paws & Focus</Text>
+      <Image style={styles.Image} source={require('../assets/images/SplashScreenImage.png')}/>
     </View>
   )
 }
@@ -53,11 +53,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#000',
+        backgroundColor: '#fff',
     },
-    text:{
-        color: '#fff',
-        fontSize: 24,
-        fontWeight: '600',
+    Image:{
+      height:'20%',
+      width:'45%',
+      borderRadius:'10%',
+      resizeMode:'center'
+      
     }
 })
