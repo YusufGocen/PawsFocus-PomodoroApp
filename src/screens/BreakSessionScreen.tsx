@@ -1,47 +1,79 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useRoute } from '@react-navigation/native'
+import { View, Text,StyleSheet ,StatusBar} from 'react-native'
+import React, { useEffect ,useState,useRef} from 'react'
+import { useRoute ,useNavigation} from '@react-navigation/native'
 import SessionTimer from '../components/SessionTimer'
+import { Video } from 'expo-av'
+import VideoBackground from '../components/VideoBackground'
+import * as ScreenOrientation from 'expo-screen-orientation'
 
 
 const BreakSessionScreen = () => {
 
   const route = useRoute<any>()
-  const { breakDuration, focusDuration } = route.params
+  const navigation=useNavigation<any>()
 
+  const { focusDuration, breakDuration } = route.params
+  const videoRef=useRef<Video>(null)
+  const [isPaused, setİsPaused] = useState(false)
+
+  useEffect(() => {
+    ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.LANDSCAPE
+    )
+
+    return () => {
+      ScreenOrientation.unlockAsync()
+    }
+  }, [])
   return (
-    <SafeAreaView style={styles.safe}>
-      <Text style={styles.title}>Break Time</Text>
-      <SessionTimer duration={breakDuration} onFinish={() => {
-        console.log('Break Finish') , console.log(focusDuration,breakDuration)
-      }}/>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <StatusBar hidden />
+
+      <VideoBackground
+        ref={videoRef}
+        source={require('../assets/videos/BreakVideo.mp4')}
+        isPaused={isPaused}
+      />
+
+      <View style={styles.overlay}>
+        <Text style={styles.title}>Break Time</Text>
+
+        <SessionTimer
+          duration={breakDuration}
+          onFinish={() => {
+            navigation.replace('SessionCompleted', {
+              focusDuration,
+              breakDuration,
+            })
+          }}
+        />
+      </View>
+    </View>
   )
+  
 }
-
-export default BreakSessionScreen
-
+export default BreakSessionScreen;
 const styles = StyleSheet.create({
-  safe: {
+  container: {
     flex: 1,
-    backgroundColor: '#F7EFE9',
-    justifyContent: 'center',
+    backgroundColor: '#000',
+  },
+
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
+
   title: {
-    fontSize: 26,
+    fontSize: 36,
     fontWeight: '700',
-    marginBottom: 20,
-  },
-  timer: {
-    fontSize: 56,
-    fontWeight: '700',
-    color: '#F1BFA8',
-  },
-  sub: {
-    marginTop: 16,
-    fontSize: 14,
-    color: '#7A7A7A',
+    color: '#fff',
+    marginBottom: 2,
   },
 })

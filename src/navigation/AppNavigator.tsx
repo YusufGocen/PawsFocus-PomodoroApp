@@ -6,6 +6,7 @@ import React from 'react'
 import Onboarding from '../screens/OnboardingScreen'
 import FocusSession from '../screens/FocusSessionScreen'
 import BreakSession from '../screens/BreakSessionScreen'
+import SessionCompleted from '../screens/SessionCompleted'
 
 
 const Stack=createNativeStackNavigator()
@@ -19,6 +20,7 @@ export default function AppNavigator() {
         <Stack.Screen name='Break' component={BreakScreen}/>
         <Stack.Screen name='FocusSession' component={FocusSession}/>
         <Stack.Screen name='BreakSession' component={BreakSession}/>
+        <Stack.Screen name='SessionCompleted' component={SessionCompleted}/>
     </Stack.Navigator>
   )
 }

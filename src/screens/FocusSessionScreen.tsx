@@ -1,41 +1,77 @@
-import { View, Text,StyleSheet } from 'react-native'
-import React, { useEffect ,useState} from 'react'
+import { View, Text,StyleSheet ,StatusBar} from 'react-native'
+import React, { useEffect ,useState,useRef} from 'react'
 import { useRoute ,useNavigation} from '@react-navigation/native'
 import SessionTimer from '../components/SessionTimer'
+import { Video } from 'expo-av'
+import VideoBackground from '../components/VideoBackground'
+import * as ScreenOrientation from 'expo-screen-orientation'
 
 export default function FocusSessionScreen() {
   const route = useRoute<any>()
   const navigation=useNavigation<any>()
 
   const { focusDuration, breakDuration } = route.params
+  const videoRef=useRef<Video>(null)
+  const [isPaused, setİsPaused] = useState(false)
 
+  useEffect(() => {
+    ScreenOrientation.lockAsync(
+      ScreenOrientation.OrientationLock.LANDSCAPE
+    )
+
+    return () => {
+      ScreenOrientation.unlockAsync()
+    }
+  }, [])
 
   return (
-    <View style={styles.safe}>
-      <Text style={styles.title}>Focus time</Text>
-      <SessionTimer duration={focusDuration} onFinish={() => {
-        console.log('Focus Finish') , navigation.replace('BreakSession',{focusDuration,breakDuration})
-      }}/>
+    <View style={styles.container}>
+      <StatusBar hidden />
+
+      <VideoBackground
+        ref={videoRef}
+        source={require('../assets/videos/BreakVideo.mp4')}
+        isPaused={isPaused}
+      />
+
+      <View style={styles.overlay}>
+        <Text style={styles.title}>Focus Time</Text>
+
+        <SessionTimer
+          duration={focusDuration}
+          onFinish={() => {
+            navigation.replace('BreakSession', {
+              focusDuration,
+              breakDuration,
+            })
+          }}
+        />
+      </View>
     </View>
   )
   
 }
 const styles = StyleSheet.create({
-  safe: {
+  container: {
     flex: 1,
-    backgroundColor: '#F7EFE9',
-    justifyContent: 'center',
+    backgroundColor: '#000',
+  },
+
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
+
   title: {
-    fontSize: 22,
-    marginBottom: 20,
-    color: '#2B2B2B',
-    fontWeight: '600',
-  },
-  timer: {
-    fontSize: 64,
+    fontSize: 36,
     fontWeight: '700',
-    color: '#F1BFA8',
+    color: '#fff',
+    marginBottom: 2,
   },
 })
