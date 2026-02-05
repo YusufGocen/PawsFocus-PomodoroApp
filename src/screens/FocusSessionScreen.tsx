@@ -30,7 +30,7 @@ export default function FocusSessionScreen() {
 
       <VideoBackground
         ref={videoRef}
-        source={require('../assets/videos/BreakVideo.mp4')}
+        source={require('../assets/videos/FocusVideo.mp4')}
         isPaused={isPaused}
       />
 
