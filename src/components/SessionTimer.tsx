@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { Ionicons } from '@expo/vector-icons'
 
 type Props = {
-  duration: number // dakika
+  duration: number 
   onFinish?: () => void
+  onPauseChange?: (isPaused: boolean) => void
 }
 
-export default function SessionTimer({ duration, onFinish }: Props) {
+export default function SessionTimer({ duration, onFinish,onPauseChange }: Props) {
     const [secondsLeft, setSecondsLeft] = useState(duration * 60)
     const [isPaused, setIsPaused] = useState(false)
     const [finished, setFinished] = useState(false)
@@ -33,6 +35,12 @@ export default function SessionTimer({ duration, onFinish }: Props) {
       }
     }, [finished])
 
+    const handlePauseToggle = () => {
+      const newPausedState = !isPaused
+      setIsPaused(newPausedState)
+      onPauseChange?.(newPausedState)
+    }
+
   const minutes = Math.floor(secondsLeft / 60)
   const seconds = secondsLeft % 60
 
@@ -44,11 +52,13 @@ export default function SessionTimer({ duration, onFinish }: Props) {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => setIsPaused(p => !p)}
+        onPress={handlePauseToggle} 
       >
-        <Text style={styles.buttonText}>
-          {isPaused ? 'Resume' : 'Pause'}
-        </Text>
+        <Ionicons
+          name={isPaused ? 'play' : 'pause'}
+          size={38}
+          color="#fff"
+        />
       </TouchableOpacity>
     </View>
   )
@@ -65,14 +75,15 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   button: {
-    paddingHorizontal: 26,
-    paddingVertical: 12,
+    width:70,
+    height:70,
     backgroundColor: '#F1BFA8',
-    borderRadius: 18,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    borderRadius: 35,
+    alignItems:'center',
+    justifyContent:'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
   },
 })

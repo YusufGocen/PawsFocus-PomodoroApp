@@ -37,7 +37,7 @@ export default function BreakSelectScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.safe}>
+    <SafeAreaView style={styles.safe} edges={['bottom']}>
       <Text style={styles.title}>Choose your break time</Text>
       <Text style={styles.subtitle}>
         Select a duration to recharge your energy.
@@ -97,7 +97,7 @@ export default function BreakSelectScreen() {
 
 const styles = StyleSheet.create({
   safe: {
-    flex: 1,
+    flex:1,    
     backgroundColor: '#F7EFE9',
     paddingHorizontal: 20,
     justifyContent:'center',

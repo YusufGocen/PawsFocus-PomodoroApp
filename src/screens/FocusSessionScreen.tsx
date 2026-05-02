@@ -12,7 +12,7 @@ export default function FocusSessionScreen() {
 
   const { focusDuration, breakDuration } = route.params
   const videoRef=useRef<Video>(null)
-  const [isPaused, setİsPaused] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
     ScreenOrientation.lockAsync(
@@ -45,6 +45,7 @@ export default function FocusSessionScreen() {
               breakDuration,
             })
           }}
+          onPauseChange={setIsPaused}
         />
       </View>
     </View>
