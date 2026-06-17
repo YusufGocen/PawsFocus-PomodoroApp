@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View ,Image, TouchableOpacity} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome,Entypo,Feather } from '@expo/vector-icons'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import { useFocusEffect, useRoute, useNavigation } from '@react-navigation/native'
 import { useCallback, useEffect,useState } from 'react'
@@ -92,7 +92,48 @@ useFocusEffect(
             style={styles.heroImage}
           />
             <View style={styles.card}>
-              <Text>Focus Time</Text>
+
+              {/*Focus Time*/}
+              <View style={styles.row}>
+                <View style={styles.iconCircle}>
+                  <Entypo name='stopwatch' size={24} color='#8C9A67'/>
+                </View>
+                <Text style={styles.rowTitle}>Focus Time</Text>
+
+                <View style={styles.valueContainer}>
+                  <Text style={[styles.focusValue,{color:'#8C9A67'}]}>{focusDuration} min</Text>
+                </View>
+              </View>
+
+              <View style={styles.divider}/>
+
+              {/*Break Time*/}
+              <View style={styles.row}>
+
+                <View style={[styles.iconCircle,{backgroundColor:'#FFF4EC'}]}>
+                    <Feather name='coffee' size={24} color='#D6A180'/>
+                </View>
+                  <Text style={styles.rowTitle}>Break Time</Text>
+
+                <View style={styles.valueContainer}>
+                    <Text style={[styles.focusValue,{color:'#D6A180'}]}>{breakDuration} min</Text>
+                </View>
+
+              </View>
+
+              <View style={styles.divider}/>
+
+              {/*Total Time*/}
+              <View style={styles.row}>
+                <View style={[styles.iconCircle,{backgroundColor:'#FFF1EB'}]}>
+                    <Feather name='clock' size={24} color='#E58A5F'/>
+                </View>
+                  <Text style={styles.rowTitle}>Total Time</Text>
+
+                <View style={styles.valueContainer}>
+                    <Text style={[styles.focusValue,{color:'#E58A5F'}]}>{focusDuration+breakDuration} min</Text>
+                </View>
+              </View>
               
             </View>
 
@@ -186,14 +227,45 @@ const styles = StyleSheet.create({
   },
   card:{
     width: '75%',
-    height:'35%',
     backgroundColor: '#FBF4F0',
     borderRadius: 24,
-    padding: 20,  
+    padding: 20,
     shadowColor: '#000',
     shadowOpacity: 0.05,
     shadowRadius: 10,
     elevation: 5,
+  },
+  row:{
+    flexDirection:'row',
+    alignItems:'center',
+    marginVertical:1
+  },
+  iconCircle:{
+    width:48,
+    height:48,
+    borderRadius:24,
+    backgroundColor:'#F3F5EA',
+    justifyContent:'center',
+    alignItems:'center'
+  },
+  rowTitle:{
+    flex:1,
+    marginLeft:16,
+    fontSize:18,
+    fontWeight:'500',
+    color:'#4A3A34'
+  },
+  valueContainer:{
+    alignItems:'flex-end'
+  },
+  focusValue:{
+    fontSize:18,
+    fontWeight:'700',
+  },
+  divider:{
+    height:1,
+    backgroundColor:'#EFE5DE',
+    marginVertical:8
   },
   grid:{
     width: '100%',
@@ -248,7 +320,7 @@ const styles = StyleSheet.create({
     width: '75%',
     borderRadius: 24,
     padding: 20,
-    marginTop: 20,
+    marginTop: 10,
     shadowColor: '#000',
     shadowOpacity: 0.05,
     shadowRadius: 10,
