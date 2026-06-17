@@ -1,1 +1,5 @@
-<img width="12900" height="3796" alt="PawsFocus" src="https://github.com/user-attachments/assets/0330ea79-a6b0-43ac-bff8-471c5085e07c" />
+
+<img width="12900" height="2796" alt="2 (1)" src="https://github.com/user-attachments/assets/e21a304a-8b4c-4e3e-b7c0-fcae13564916" />
+
+
+
