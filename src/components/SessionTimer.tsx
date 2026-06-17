@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default function SessionTimer({ duration, onFinish,onPauseChange }: Props) {
-    const [secondsLeft, setSecondsLeft] = useState(duration * 60)
+    const [secondsLeft, setSecondsLeft] = useState(duration * 0)
     const [isPaused, setIsPaused] = useState(false)
     const [finished, setFinished] = useState(false)
   
@@ -61,6 +61,7 @@ export default function SessionTimer({ duration, onFinish,onPauseChange }: Props
         />
       </TouchableOpacity>
     </View>
+    
   )
 }
 

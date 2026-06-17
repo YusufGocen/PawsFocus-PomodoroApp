@@ -20,11 +20,11 @@ const BreakSessionScreen = () => {
     ScreenOrientation.lockAsync(
       ScreenOrientation.OrientationLock.LANDSCAPE
     )
-
     return () => {
       ScreenOrientation.unlockAsync()
     }
   }, [])
+
   return (
     <View style={styles.container}>
       <StatusBar hidden />
@@ -42,6 +42,7 @@ const BreakSessionScreen = () => {
           duration={breakDuration}
           onFinish={() => {
             navigation.replace('SessionCompleted', {
+              incrementSession:true,
               focusDuration,
               breakDuration,
             })
